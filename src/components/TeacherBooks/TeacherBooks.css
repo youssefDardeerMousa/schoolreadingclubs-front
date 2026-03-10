@@ -1,0 +1,85 @@
+/* Traditional Table Styles */
+.rating-modal .modal-dialog {
+  max-width: 95%;
+  margin: 1.75rem auto;
+}
+
+.rating-modal .modal-content {
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.rating-table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #212529;
+  border-collapse: collapse;
+}
+
+.rating-table th,
+.rating-table td {
+  padding: 12px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.rating-table thead th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  color: #495057;
+  border-bottom: 2px solid #ced4da;
+}
+
+.rating-table tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.rating-table tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.rating-table .form-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rating-table .form-check-input {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+.rating-table .form-check-label {
+  margin-right: 1.25rem;
+  color: #495057;
+}
+
+.rating-table .form-control {
+  width: 100%;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 0.9rem;
+  height: 35px; /* Consistent height for all dropdowns */
+}
+
+.rating-table .form-control[data-type="boolean"] {
+  background-color: #f8f9fa;
+  color: #495057;
+  border-color: #ced4da;
+}
+
+.rating-table .form-control[data-type="boolean"]:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.rating-table td:first-child {
+  background-color: #f1f3f5;
+  font-weight: bold;
+  text-align: right;
+  color: #2c3e50;
+  font-size: 0.9rem;
+}
