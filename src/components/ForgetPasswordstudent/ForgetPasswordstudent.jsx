@@ -38,7 +38,7 @@ const ForgetPasswordStudent = () => {
             setIsSuccess(true);
             setShowModal(true);
             setTimeout(() => {
-                navigate("/SchoolsBookClubs/LoginStudent");
+                navigate("/LoginStudent");
             }, 2000);
         } catch (error) {
             setModalMessage(
@@ -55,7 +55,7 @@ const ForgetPasswordStudent = () => {
     const handleCloseModal = () => {
         setShowModal(false);
         if (isSuccess) {
-            navigate("/SchoolsBookClubs/LoginStudent");
+            navigate("/LoginStudent");
         }
     };
 

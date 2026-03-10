@@ -38,7 +38,7 @@ const ForgotPasswordParent = () => {
           setIsSuccess(true);
           setShowModal(true);
           setTimeout(() => {
-              navigate("/SchoolsBookClubs/LoginParent");
+              navigate("/LoginParent");
           }, 2000);
       } catch (error) {
           setModalMessage(
@@ -55,7 +55,7 @@ const ForgotPasswordParent = () => {
   const handleCloseModal = () => {
       setShowModal(false);
       if (isSuccess) {
-          navigate("/SchoolsBookClubs/LoginParent");
+          navigate("/LoginParent");
       }
   };
 

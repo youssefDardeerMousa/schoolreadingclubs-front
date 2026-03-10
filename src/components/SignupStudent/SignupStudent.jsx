@@ -1,37 +1,46 @@
-import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './SignupStudent.css';
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./SignupStudent.css";
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('الاسم مطلوب'),
-  email: Yup.string().email('البريد الإلكتروني غير صالح').required('البريد الإلكتروني مطلوب'),
-  password: Yup.string().min(6, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل').required('كلمة المرور مطلوبة'),
-  schoolCode: Yup.string().required('رمز المدرسة مطلوب'),
-  grade: Yup.string().required('الصف الدراسي مطلوب'),
+  name: Yup.string().required("الاسم مطلوب"),
+  email: Yup.string()
+    .email("البريد الإلكتروني غير صالح")
+    .required("البريد الإلكتروني مطلوب"),
+  password: Yup.string()
+    .min(6, "كلمة المرور يجب أن تكون 6 أحرف على الأقل")
+    .required("كلمة المرور مطلوبة"),
+  schoolCode: Yup.string().required("رمز المدرسة مطلوب"),
+  grade: Yup.string().required("الصف الدراسي مطلوب"),
 });
 
 const SignupStudent = () => {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertVariant, setAlertVariant] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("");
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post('https://schoolreadingclubs.vercel.app/api/student/signup', values);
-      setAlertVariant('success');
+      const response = await axios.post(
+        "https://schoolreadingclubs.vercel.app/api/student/signup",
+        values,
+      );
+      setAlertVariant("success");
       setAlertMessage(response.data.message);
       setShowAlert(true);
       setTimeout(() => {
-        navigate('/SchoolsBookClubs/LoginStudent');
+        navigate("/LoginStudent");
       }, 2000);
     } catch (error) {
-      setAlertVariant('error');
+      setAlertVariant("error");
       console.log(error.response.data.message);
-      setAlertMessage(error.response.data.message || 'حدث خطأ أثناء إنشاء الحساب');
+      setAlertMessage(
+        error.response.data.message || "حدث خطأ أثناء إنشاء الحساب",
+      );
       setShowAlert(true);
     }
     setSubmitting(false);
@@ -41,7 +50,6 @@ const SignupStudent = () => {
     <div className="signup-container">
       <div className="signup-card">
         <h2 className="signup-title">
-         
           انشاء حساب جديد للطالب
           <i className="fas fa-user-graduate"></i>
         </h2>
@@ -51,12 +59,20 @@ const SignupStudent = () => {
         {showAlert && (
           <div className={`alert ${alertVariant}`}>
             {alertMessage}
-            <button className="alert-close" onClick={() => setShowAlert(false)}>×</button>
+            <button className="alert-close" onClick={() => setShowAlert(false)}>
+              ×
+            </button>
           </div>
         )}
 
         <Formik
-          initialValues={{ name: '', email: '', password: '', schoolCode: '', grade: '' }}
+          initialValues={{
+            name: "",
+            email: "",
+            password: "",
+            schoolCode: "",
+            grade: "",
+          }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -81,7 +97,7 @@ const SignupStudent = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="ادخل الاسم"
-                  className={touched.name && errors.name ? 'error' : ''}
+                  className={touched.name && errors.name ? "error" : ""}
                 />
                 {touched.name && errors.name && (
                   <div className="error-message">{errors.name}</div>
@@ -100,7 +116,7 @@ const SignupStudent = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="ادخل البريد الإلكتروني"
-                  className={touched.email && errors.email ? 'error' : ''}
+                  className={touched.email && errors.email ? "error" : ""}
                 />
                 {touched.email && errors.email && (
                   <div className="error-message">{errors.email}</div>
@@ -119,7 +135,7 @@ const SignupStudent = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="ادخل كلمة المرور"
-                  className={touched.password && errors.password ? 'error' : ''}
+                  className={touched.password && errors.password ? "error" : ""}
                 />
                 {touched.password && errors.password && (
                   <div className="error-message">{errors.password}</div>
@@ -138,7 +154,9 @@ const SignupStudent = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="ادخل رمز المدرسة"
-                  className={touched.schoolCode && errors.schoolCode ? 'error' : ''}
+                  className={
+                    touched.schoolCode && errors.schoolCode ? "error" : ""
+                  }
                 />
                 {touched.schoolCode && errors.schoolCode && (
                   <div className="error-message">{errors.schoolCode}</div>
@@ -157,7 +175,7 @@ const SignupStudent = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="أدخل الصف الدراسي"
-                  className={touched.grade && errors.grade ? 'error' : ''}
+                  className={touched.grade && errors.grade ? "error" : ""}
                 />
                 {touched.grade && errors.grade && (
                   <div className="error-message">{errors.grade}</div>
@@ -183,8 +201,8 @@ const SignupStudent = () => {
               </button>
 
               <div className="login-link">
-                لديك حساب بالفعل؟{' '}
-                <span onClick={() => navigate('/SchoolsBookClubs/LoginStudent')}>
+                لديك حساب بالفعل؟{" "}
+                <span onClick={() => navigate("/LoginStudent")}>
                   تسجيل الدخول
                 </span>
               </div>

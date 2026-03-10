@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Navbar as BootstrapNavbar, Nav, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { DataContext } from '../../context/context.js';
-import './Navbar.css';
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { Navbar as BootstrapNavbar, Nav, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { DataContext } from "../../context/context.js";
+import "./Navbar.css";
 
 const MainNavbar = () => {
   const { getUserRole, logout } = useContext(DataContext);
@@ -17,8 +17,8 @@ const MainNavbar = () => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const toggleDropdown = () => {
@@ -31,7 +31,7 @@ const MainNavbar = () => {
 
   const getNavItems = () => {
     if (!role) {
-      console.warn('No user role detected in Navbar');
+      console.warn("No user role detected in Navbar");
       return null;
     }
 
@@ -46,18 +46,14 @@ const MainNavbar = () => {
     const renderDropdownLinks = (links) => {
       if (links.length <= 4) return null;
       return (
-        <div ref={dropdownRef} style={{ position: 'relative' }}>
+        <div ref={dropdownRef} style={{ position: "relative" }}>
           <div className="dropdown-toggle" onClick={toggleDropdown}>
             المزيد
           </div>
           {isDropdownOpen && (
             <div className="dropdown-menu">
               {links.slice(4).map((link, index) => (
-                <Link
-                  key={index}
-                  to={link.to}
-                  onClick={handleLinkClick}
-                >
+                <Link key={index} to={link.to} onClick={handleLinkClick}>
                   {link.text}
                 </Link>
               ))}
@@ -69,44 +65,56 @@ const MainNavbar = () => {
 
     let links = [];
     switch (role) {
-      case 'طالب':
+      case "طالب":
         links = [
-          { to: '/SchoolsBookClubs/dashboard', text: 'لوحة التحكم' },
-          { to: '/SchoolsBookClubs/ProfileStudent', text: 'الملف الشخصي' },
-          { to: '/SchoolsBookClubs/LibraryStudent', text: 'الكتب والتقييم' },
-          { to: '/SchoolsBookClubs/StudentBag', text: 'حقيبة القارئ' },
-          { to: '/SchoolsBookClubs/StudentGuide', text: 'دليل الطالب' },
-          { to: '/SchoolsBookClubs/ReadingClubEvaluation', text: 'تقييم نادي القراءة' },
-          { to: '/SchoolsBookClubs/Student_Rates', text: 'تقييمات الطالب' }
+          { to: "/dashboard", text: "لوحة التحكم" },
+          { to: "/ProfileStudent", text: "الملف الشخصي" },
+          { to: "/LibraryStudent", text: "الكتب والتقييم" },
+          { to: "/StudentBag", text: "حقيبة القارئ" },
+          { to: "/StudentGuide", text: "دليل الطالب" },
+          { to: "/ReadingClubEvaluation", text: "تقييم نادي القراءة" },
+          { to: "/Student_Rates", text: "تقييمات الطالب" },
         ];
         break;
-      case 'معلم':
+      case "معلم":
         links = [
-          { to: '/SchoolsBookClubs/dashboard', text: 'الصفحة الرئيسية' },
-          { to: '/SchoolsBookClubs/books', text: 'اضافة كتاب' },
-          { to: '/SchoolsBookClubs/Teacherbooks', text: 'الكتب و التقييم' },
-          { to: '/SchoolsBookClubs/TeacherEvaluationsOfStudents', text: 'تقييمات المعلم للطلاب' },
-          { to: '/SchoolsBookClubs/StudentReviewsofTeacherBooks', text: 'تقييمات الطلاب للكتب ' },
-          { to: '/SchoolsBookClubs/TeacherGuide', text: 'دليل المعلم' }
+          { to: "/dashboard", text: "الصفحة الرئيسية" },
+          { to: "/books", text: "اضافة كتاب" },
+          { to: "/Teacherbooks", text: "الكتب و التقييم" },
+          {
+            to: "/TeacherEvaluationsOfStudents",
+            text: "تقييمات المعلم للطلاب",
+          },
+          {
+            to: "/StudentReviewsofTeacherBooks",
+            text: "تقييمات الطلاب للكتب ",
+          },
+          { to: "/TeacherGuide", text: "دليل المعلم" },
         ];
         break;
-      case 'مشرف':
+      case "مشرف":
         links = [
-          { to: '/SchoolsBookClubs/dashboard', text: 'لوحة التحكم' },
-          { to: '/SchoolsBookClubs/admin/OneSchoolTeacherEvaluations', text: 'تقييم المعلمين' },
-          { to: '/SchoolsBookClubs/admin/OneSchoolStusentEvaluations', text: 'تقييم الطلاب' },
-          { to: '/SchoolsBookClubs/admin/OneSchoolParentEvaluations', text: 'تقييم اولياء الامور' },
-          { to: '/SchoolsBookClubs/admin/AttendanceoneSchool', text: 'الحضور والغياب' },
-          { to: '/SchoolsBookClubs/admin/ReadingBooksNumberoneSchool', text: 'عدد الكتب المقروءة' }
+          { to: "/dashboard", text: "لوحة التحكم" },
+          { to: "/admin/OneSchoolTeacherEvaluations", text: "تقييم المعلمين" },
+          { to: "/admin/OneSchoolStusentEvaluations", text: "تقييم الطلاب" },
+          {
+            to: "/admin/OneSchoolParentEvaluations",
+            text: "تقييم اولياء الامور",
+          },
+          { to: "/admin/AttendanceoneSchool", text: "الحضور والغياب" },
+          {
+            to: "/admin/ReadingBooksNumberoneSchool",
+            text: "عدد الكتب المقروءة",
+          },
         ];
         break;
-      case 'ولي أمر':
+      case "ولي أمر":
         links = [
-          { to: '/SchoolsBookClubs/dashboard', text: 'لوحة التحكم' },
-          { to: '/SchoolsBookClubs/Parentprofile', text: 'بياناتي الشخصية' },
-          { to: '/SchoolsBookClubs/Parentassessment', text: 'تقييم ولي الامر' },
-          { to: '/SchoolsBookClubs/ShowParentassessments', text: 'عرض التقييمات' },
-          { to: '/SchoolsBookClubs/ParentGuide', text: 'دليل ولي الامر' }
+          { to: "/dashboard", text: "لوحة التحكم" },
+          { to: "/Parentprofile", text: "بياناتي الشخصية" },
+          { to: "/Parentassessment", text: "تقييم ولي الامر" },
+          { to: "/ShowParentassessments", text: "عرض التقييمات" },
+          { to: "/ParentGuide", text: "دليل ولي الامر" },
         ];
         break;
       default:
@@ -124,7 +132,9 @@ const MainNavbar = () => {
   return (
     <BootstrapNavbar bg="light" expand="lg" className="rtl-navbar">
       <Container>
-        <BootstrapNavbar.Brand as={Link} to="/SchoolsBookClubs/dashboard">برنامج أندية القراءة المدرسية</BootstrapNavbar.Brand>
+        <BootstrapNavbar.Brand as={Link} to="/dashboard">
+          برنامج أندية القراءة المدرسية
+        </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
         <BootstrapNavbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">{getNavItems()}</Nav>

@@ -1,58 +1,59 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './SignupParent.css';
+import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./SignupParent.css";
 
 const SignupParent = () => {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertVariant, setAlertVariant] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("");
 
   const validationSchema = Yup.object({
     name: Yup.string()
-      .required('الاسم مطلوب')
-      .min(2, 'الاسم يجب أن يكون حرفين على الأقل'),
+      .required("الاسم مطلوب")
+      .min(2, "الاسم يجب أن يكون حرفين على الأقل"),
     email: Yup.string()
-      .email('البريد الإلكتروني غير صالح')
-      .required('البريد الإلكتروني مطلوب'),
+      .email("البريد الإلكتروني غير صالح")
+      .required("البريد الإلكتروني مطلوب"),
     password: Yup.string()
-      .required('كلمة المرور مطلوبة')
-      .min(6, 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'),
-    studentcodeinparent: Yup.string()
-      .required('رمز الطالب مطلوب'),
-    phone: Yup.string()
-      .required('رقم الجوال مطلوب'),
-    schoolCode: Yup.string()
-      .required('رمز المدرسة مطلوب')
+      .required("كلمة المرور مطلوبة")
+      .min(6, "كلمة المرور يجب أن تكون 6 أحرف على الأقل"),
+    studentcodeinparent: Yup.string().required("رمز الطالب مطلوب"),
+    phone: Yup.string().required("رقم الجوال مطلوب"),
+    schoolCode: Yup.string().required("رمز المدرسة مطلوب"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await axios.post('https://schoolreadingclubs.vercel.app/api/parent/signup', {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        studentcodeinparent: values.studentcodeinparent,
-        phone: values.phone,
-        schoolCode: values.schoolCode,
-        role: 'ولي أمر'
-      });
+      const response = await axios.post(
+        "https://schoolreadingclubs.vercel.app/api/parent/signup",
+        {
+          name: values.name,
+          email: values.email,
+          password: values.password,
+          studentcodeinparent: values.studentcodeinparent,
+          phone: values.phone,
+          schoolCode: values.schoolCode,
+          role: "ولي أمر",
+        },
+      );
 
-      setAlertVariant('success');
+      setAlertVariant("success");
       setAlertMessage(response?.data?.message);
       setShowAlert(true);
       resetForm();
-      
-      setTimeout(() => {
-        navigate('/SchoolsBookClubs/LoginParent');
-      }, 4000);
 
+      setTimeout(() => {
+        navigate("/LoginParent");
+      }, 4000);
     } catch (error) {
-      setAlertVariant('danger');
-      setAlertMessage(error.response?.data?.message || 'حدث خطأ أثناء إنشاء الحساب');
+      setAlertVariant("danger");
+      setAlertMessage(
+        error.response?.data?.message || "حدث خطأ أثناء إنشاء الحساب",
+      );
       setShowAlert(true);
     }
     setSubmitting(false);
@@ -62,26 +63,22 @@ const SignupParent = () => {
     <div className="signup-parent-container">
       <div className="signup-parent-card">
         <h2 className="signup-parent-title">
-          
           انشاء حساب ولي أمر جديد
           <i className="fas fa-user-plus"></i>
         </h2>
-       
-   
+
         {showAlert && (
-          <div className={`alert ${alertVariant}`}>
-            {alertMessage}
-          </div>
+          <div className={`alert ${alertVariant}`}>{alertMessage}</div>
         )}
 
         <Formik
           initialValues={{
-            name: '',
-            email: '',
-            password: '',
-            studentcodeinparent: '',
-            phone: '',
-            schoolCode: ''
+            name: "",
+            email: "",
+            password: "",
+            studentcodeinparent: "",
+            phone: "",
+            schoolCode: "",
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -96,7 +93,7 @@ const SignupParent = () => {
                 <Field
                   type="text"
                   name="name"
-                  className={`form-control ${errors.name && touched.name ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.name && touched.name ? "is-invalid" : ""}`}
                   placeholder="ادخل الاسم"
                 />
                 {errors.name && touched.name && (
@@ -112,7 +109,7 @@ const SignupParent = () => {
                 <Field
                   type="email"
                   name="email"
-                  className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.email && touched.email ? "is-invalid" : ""}`}
                   placeholder="ادخل البريد الإلكتروني"
                 />
                 {errors.email && touched.email && (
@@ -128,7 +125,7 @@ const SignupParent = () => {
                 <Field
                   type="password"
                   name="password"
-                  className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.password && touched.password ? "is-invalid" : ""}`}
                   placeholder="ادخل كلمة المرور"
                 />
                 {errors.password && touched.password && (
@@ -144,11 +141,13 @@ const SignupParent = () => {
                 <Field
                   type="text"
                   name="studentcodeinparent"
-                  className={`form-control ${errors.studentcodeinparent && touched.studentcodeinparent ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.studentcodeinparent && touched.studentcodeinparent ? "is-invalid" : ""}`}
                   placeholder="ادخل الكود الخاص بالطالب"
                 />
                 {errors.studentcodeinparent && touched.studentcodeinparent && (
-                  <div className="invalid-feedback">{errors.studentcodeinparent}</div>
+                  <div className="invalid-feedback">
+                    {errors.studentcodeinparent}
+                  </div>
                 )}
               </div>
 
@@ -160,7 +159,7 @@ const SignupParent = () => {
                 <Field
                   type="text"
                   name="schoolCode"
-                  className={`form-control ${errors.schoolCode && touched.schoolCode ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.schoolCode && touched.schoolCode ? "is-invalid" : ""}`}
                   placeholder="ادخل كود المدرسة"
                 />
                 {errors.schoolCode && touched.schoolCode && (
@@ -176,7 +175,7 @@ const SignupParent = () => {
                 <Field
                   type="text"
                   name="phone"
-                  className={`form-control ${errors.phone && touched.phone ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.phone && touched.phone ? "is-invalid" : ""}`}
                   placeholder="ادخل رقم الجوال"
                 />
                 {errors.phone && touched.phone && (
@@ -203,12 +202,12 @@ const SignupParent = () => {
               </button>
 
               <div className="text-center">
-              لديك حساب بالفعل؟
+                لديك حساب بالفعل؟
                 <span
-                  style={{ color: '#3498db', cursor: 'pointer' }}
-                  onClick={() => navigate('/SchoolsBookClubs/LoginParent')}
+                  style={{ color: "#3498db", cursor: "pointer" }}
+                  onClick={() => navigate("/LoginParent")}
                 >
-                   تسجيل الدخول
+                  تسجيل الدخول
                 </span>
               </div>
             </Form>

@@ -22,7 +22,7 @@ export default function ChangeSupervisorPassword() {
             setIsSuccess(true);
             setShowModal(true);
             setTimeout(() => {
-                navigate("/SchoolsBookClubs/ForgotPasswordsupervisor");
+                navigate("/ForgotPasswordsupervisor");
             }, 2000);
         } catch (error) {
             setModalMessage(
@@ -38,7 +38,7 @@ export default function ChangeSupervisorPassword() {
     const handleCloseModal = () => {
         setShowModal(false);
         if (isSuccess) {
-            navigate("/SchoolsBookClubs/ForgetPasswordsupervisor");
+            navigate("/ForgetPasswordsupervisor");
         }
     };
 

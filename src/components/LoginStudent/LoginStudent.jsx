@@ -1,29 +1,31 @@
-import React, { useState, useContext } from 'react';
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { DataContext } from '../../context/context.js';
-import './LoginStudent.css';
+import React, { useState, useContext } from "react";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { DataContext } from "../../context/context.js";
+import "./LoginStudent.css";
 
 const validationSchema = Yup.object({
   email: Yup.string()
-    .email('البريد الإلكتروني غير صالح')
-    .required('البريد الإلكتروني مطلوب'),
-  password: Yup.string()
-    .required('كلمة المرور مطلوبة')
+    .email("البريد الإلكتروني غير صالح")
+    .required("البريد الإلكتروني مطلوب"),
+  password: Yup.string().required("كلمة المرور مطلوبة"),
 });
 
 const LoginStudent = () => {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertVariant, setAlertVariant] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("");
   const { setTokenAndUpdateRole } = useContext(DataContext);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const { data } = await axios.post('https://schoolreadingclubs.vercel.app/api/student/login', values);
+      const { data } = await axios.post(
+        "https://schoolreadingclubs.vercel.app/api/student/login",
+        values,
+      );
       console.log(data);
       if (data.success == true) {
         setTokenAndUpdateRole(data.token);
@@ -31,7 +33,7 @@ const LoginStudent = () => {
         setAlertMessage("تم تسجيل الدخول بنجاح");
         setShowAlert(true);
         setTimeout(() => {
-          navigate("/SchoolsBookClubs/dashboard"); 
+          navigate("/dashboard");
         }, 2000);
       }
     } catch (error) {
@@ -47,20 +49,21 @@ const LoginStudent = () => {
     <div className="login-container">
       <div className="login-card">
         <h2 className="login-title">
-          
           تسجيل دخول الطالب
           <i className="fas fa-user-graduate"></i>
         </h2>
-        
+
         {showAlert && (
           <div className={`alert ${alertVariant}`}>
             {alertMessage}
-            <button className="alert-close" onClick={() => setShowAlert(false)}>×</button>
+            <button className="alert-close" onClick={() => setShowAlert(false)}>
+              ×
+            </button>
           </div>
         )}
 
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ email: "", password: "" }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -85,7 +88,7 @@ const LoginStudent = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="ادخل البريد الإلكتروني"
-                  className={touched.email && errors.email ? 'error' : ''}
+                  className={touched.email && errors.email ? "error" : ""}
                 />
                 {touched.email && errors.email && (
                   <div className="error-message">{errors.email}</div>
@@ -104,7 +107,7 @@ const LoginStudent = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   placeholder="ادخل كلمة المرور"
-                  className={touched.password && errors.password ? 'error' : ''}
+                  className={touched.password && errors.password ? "error" : ""}
                 />
                 {touched.password && errors.password && (
                   <div className="error-message">{errors.password}</div>
@@ -130,17 +133,17 @@ const LoginStudent = () => {
               </button>
 
               <div className="links-container">
-                <span 
+                <span
                   className="forgot-password-link"
-                  onClick={() => navigate('/SchoolsBookClubs/ChangeStudentPassword')}
+                  onClick={() => navigate("/ChangeStudentPassword")}
                 >
                   <i className="fas fa-key"></i>
                   نسيت كلمة المرور؟
                 </span>
-                
-                <span 
+
+                <span
                   className="signup-link"
-                  onClick={() => navigate('/SchoolsBookClubs/SignupStudent')}
+                  onClick={() => navigate("/SignupStudent")}
                 >
                   <i className="fas fa-user-plus"></i>
                   إنشاء حساب جديد

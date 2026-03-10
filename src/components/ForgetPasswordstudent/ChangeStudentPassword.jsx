@@ -23,7 +23,7 @@ export default function ChangeStudentPassword() {
             setIsSuccess(true);
             setShowModal(true);
             setTimeout(() => {
-                navigate("/SchoolsBookClubs/ForgetPasswordstudent");
+                navigate("/ForgetPasswordstudent");
             }, 2000);
         } catch (error) {
             setModalMessage(
@@ -39,7 +39,7 @@ export default function ChangeStudentPassword() {
     const handleCloseModal = () => {
         setShowModal(false);
         if (isSuccess) {
-            navigate("/SchoolsBookClubs/ForgetPasswordstudent");
+            navigate("/ForgetPasswordstudent");
         }
     };
 

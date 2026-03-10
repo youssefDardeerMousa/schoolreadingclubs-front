@@ -38,7 +38,7 @@ const ForgetPasswordSupervisor = () => {
           setIsSuccess(true);
           setShowModal(true);
           setTimeout(() => {
-              navigate("/SchoolsBookClubs/LoginSupervisor");
+              navigate("/LoginSupervisor");
           }, 2000);
       } catch (error) {
           setModalMessage(
@@ -55,7 +55,7 @@ const ForgetPasswordSupervisor = () => {
   const handleCloseModal = () => {
       setShowModal(false);
       if (isSuccess) {
-          navigate("/SchoolsBookClubs/LoginSupervisor");
+          navigate("/LoginSupervisor");
       }
   };
 

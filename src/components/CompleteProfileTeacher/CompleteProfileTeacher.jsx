@@ -36,7 +36,7 @@ const CompleteProfileTeacher = () => {
       setShowAlert(true);
 
       setTimeout(() => {
-        navigate('/SchoolsBookClubs/LoginTeacher');
+        navigate('/LoginTeacher');
       }, 2000);
 
     } catch (error) {

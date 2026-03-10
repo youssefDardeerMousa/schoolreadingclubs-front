@@ -1,11 +1,11 @@
-import { createContext, useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode';
-import axios from 'axios';
+import { createContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 export const DataContext = createContext();
 
 export default function DataContextFunction({ children }) {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [userRole, setUserRole] = useState(null);
   const [teacherId, setTeacherId] = useState(null);
 
@@ -22,10 +22,9 @@ export default function DataContextFunction({ children }) {
 
   const decodeToken = (token) => {
     try {
-     
       return jwtDecode(token);
     } catch (error) {
-      console.error('Error decoding token:', error);
+      console.error("Error decoding token:", error);
       return null;
     }
   };
@@ -34,101 +33,116 @@ export default function DataContextFunction({ children }) {
   const createBook = async (bookData) => {
     try {
       // Ensure teacher ID is included in form data
-      bookData.append('teacher', teacherId);
+      bookData.append("teacher", teacherId);
 
-      const response = await axios.post('https://schoolreadingclubs.vercel.app/api/Book', bookData, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await axios.post(
+        "https://schoolreadingclubs.vercel.app/api/Book",
+        bookData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
       return response.data;
     } catch (error) {
-      console.error('Error creating book:', error);
+      console.error("Error creating book:", error);
       throw error;
     }
   };
 
   const fetchTeacherBooks = async () => {
     try {
-      const response = await axios.get('https://schoolreadingclubs.vercel.app/api/Book', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.get(
+        "https://schoolreadingclubs.vercel.app/api/Book",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       return response.data;
     } catch (error) {
-      console.error('Error fetching teacher books:', error);
+      console.error("Error fetching teacher books:", error);
       throw error;
     }
   };
 
   const updateBook = async (bookId, bookData) => {
     try {
-      const response = await axios.put(`https://schoolreadingclubs.vercel.app/api/Book/${bookId}`, bookData, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      const response = await axios.put(
+        `https://schoolreadingclubs.vercel.app/api/Book/${bookId}`,
+        bookData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
       return response.data;
     } catch (error) {
-      console.error('Error updating book:', error);
+      console.error("Error updating book:", error);
       throw error;
     }
   };
 
   const deleteBook = async (bookId) => {
     try {
-      const response = await axios.delete(`https://schoolreadingclubs.vercel.app/api/Book/${bookId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await axios.delete(
+        `https://schoolreadingclubs.vercel.app/api/Book/${bookId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       return response.data;
     } catch (error) {
-      console.error('Error deleting book:', error);
+      console.error("Error deleting book:", error);
       throw error;
     }
   };
 
   const getLoginPath = () => {
     switch (userRole) {
-      case 'طالب':
-        return '/SchoolsBookClubs/LoginStudent';
-      case 'معلم':
-        return '/SchoolsBookClubs/LoginTeacher';
-      case 'مشرف':
-        return '/SchoolsBookClubs/LoginSupervisor';
-      case 'ولي أمر':
-        return '/SchoolsBookClubs/LoginParent';
+      case "طالب":
+        return "/LoginStudent";
+      case "معلم":
+        return "/LoginTeacher";
+      case "مشرف":
+        return "/LoginSupervisor";
+      case "ولي أمر":
+        return "/LoginParent";
       default:
-        return '/SchoolsBookClubs';
+        return "";
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setToken(null);
-    window.location.href = '/SchoolsBookClubs';
+    window.location.href = "";
   };
 
   // Add a method to manually set token and trigger role update
   const setTokenAndUpdateRole = (newToken) => {
-    localStorage.setItem('token', newToken);
+    localStorage.setItem("token", newToken);
     setToken(newToken);
   };
 
   const fetchStudentsBySchoolCode = async () => {
     try {
       const decodedToken = decodeToken(token);
-      const response = await axios.post('https://schoolreadingclubs.vercel.app/api/student/AllStudentsBySchoolCode', 
+      const response = await axios.post(
+        "https://schoolreadingclubs.vercel.app/api/student/AllStudentsBySchoolCode",
         { schoolCode: decodedToken?.schoolCode },
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
-        }
+            "Content-Type": "application/json",
+          },
+        },
       );
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching students:', error);
+      console.error("Error fetching students:", error);
       throw error;
     }
   };
@@ -147,45 +161,49 @@ export default function DataContextFunction({ children }) {
         readingSkills: {
           completeReading: parseInt(ratingData.ratings.completeReading),
           deepUnderstanding: parseInt(ratingData.ratings.deepUnderstanding),
-          personalReflection: parseInt(ratingData.ratings.personalReflection)
+          personalReflection: parseInt(ratingData.ratings.personalReflection),
         },
         confidence: parseInt(ratingData.ratings.confidenceExpression),
         criticalThinking: {
           creativeIdeas: parseInt(ratingData.ratings.creativeIdeas),
-          connectingExperiences: parseInt(ratingData.ratings.lifeConnectionThinking),
-          independentThinking: parseInt(ratingData.ratings.independentThinking)
+          connectingExperiences: parseInt(
+            ratingData.ratings.lifeConnectionThinking,
+          ),
+          independentThinking: parseInt(ratingData.ratings.independentThinking),
         },
         communicationSkills: {
           clearExpression: parseInt(ratingData.ratings.clearCommunication),
           activeListening: parseInt(ratingData.ratings.activeListening),
-          constructiveFeedback: parseInt(ratingData.ratings.constructiveInteraction)
+          constructiveFeedback: parseInt(
+            ratingData.ratings.constructiveInteraction,
+          ),
         },
         socialSkills: {
           activeParticipation: parseInt(ratingData.ratings.activeParticipation),
           respectingDiversity: parseInt(ratingData.ratings.respectDiversity),
-          buildingFriendships: parseInt(ratingData.ratings.buildingFriendships)
+          buildingFriendships: parseInt(ratingData.ratings.buildingFriendships),
         },
         generalBehavior: {
-          collaboration: parseInt(ratingData.ratings.collaboration)
-        }
+          collaboration: parseInt(ratingData.ratings.collaboration),
+        },
       };
 
-      console.log('تقييمات المعلم للطالب:', completeRatingData);
-      
+      console.log("تقييمات المعلم للطالب:", completeRatingData);
+
       const response = await axios.post(
         `https://schoolreadingclubs.vercel.app/api/RateTeacher/${teacherId}/${studentId}`,
-        completeRatingData
+        completeRatingData,
       );
 
       return {
         message: response.data.message,
-        rating: response.data.rating
+        rating: response.data.rating,
       };
     } catch (error) {
-      console.error('Error rating student:', error);
+      console.error("Error rating student:", error);
       throw {
-        message: error.response?.data?.message || 'حدث خطأ أثناء إنشاء التقييم',
-        error: error.response?.data?.error
+        message: error.response?.data?.message || "حدث خطأ أثناء إنشاء التقييم",
+        error: error.response?.data?.error,
       };
     }
   };
@@ -193,12 +211,13 @@ export default function DataContextFunction({ children }) {
   const fetchBooksBySchoolCode = async () => {
     try {
       const decodedToken = decodeToken(token);
-      const response = await axios.post('https://schoolreadingclubs.vercel.app/api/Book/getBooksBySchoolCode', 
+      const response = await axios.post(
+        "https://schoolreadingclubs.vercel.app/api/Book/getBooksBySchoolCode",
         { schoolCode: decodedToken?.schoolCode },
       );
       return response.data;
     } catch (error) {
-      console.error('Error fetching books by school code:', error);
+      console.error("Error fetching books by school code:", error);
       throw error;
     }
   };
@@ -212,21 +231,22 @@ export default function DataContextFunction({ children }) {
         `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/student/${studentId}/book/${bookId}`,
         {
           schoolCode: decodedToken?.schoolCode,
-          ...reviewData
-        }
+          ...reviewData,
+        },
       );
 
       return {
         success: true,
-        message: response.data.message || 'تم إضافة تقييم الكتاب بنجاح',
-        data: response.data.data
+        message: response.data.message || "تم إضافة تقييم الكتاب بنجاح",
+        data: response.data.data,
       };
     } catch (error) {
-      console.error('Error submitting book rating:', error);
+      console.error("Error submitting book rating:", error);
       throw {
         success: false,
-        message: error.response?.data?.message || 'حدث خطأ أثناء إضافة تقييم الكتاب',
-        error: error.response?.data?.error
+        message:
+          error.response?.data?.message || "حدث خطأ أثناء إضافة تقييم الكتاب",
+        error: error.response?.data?.error,
       };
     }
   };
@@ -241,29 +261,31 @@ export default function DataContextFunction({ children }) {
           enjoyedReading: assessmentData.enjoyedReading,
           readUsefulBooks: assessmentData.readUsefulBooks,
           madeNewFriends: assessmentData.madeNewFriends,
-          conversationsImprovedUnderstanding: assessmentData.conversationsImprovedUnderstanding,
+          conversationsImprovedUnderstanding:
+            assessmentData.conversationsImprovedUnderstanding,
           expressedOpinionFreely: assessmentData.expressedOpinionFreely,
           increasedSelfConfidence: assessmentData.increasedSelfConfidence,
           wouldEncourageClassmates: assessmentData.wouldEncourageClassmates,
-          willJoinNextYear: assessmentData.willJoinNextYear
+          willJoinNextYear: assessmentData.willJoinNextYear,
         },
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
-        }
+            "Content-Type": "application/json",
+          },
+        },
       );
 
       return {
         success: response.data.success,
         message: response.data.message,
-        data: response.data.data
+        data: response.data.data,
       };
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "حدث خطأ أثناء إضافة التقييم الذاتي",
-        error: error.message
+        message:
+          error.response?.data?.message || "حدث خطأ أثناء إضافة التقييم الذاتي",
+        error: error.message,
       };
     }
   };
@@ -271,18 +293,19 @@ export default function DataContextFunction({ children }) {
   const getSelfAssessment = async (studentId, bookId) => {
     try {
       const response = await axios.get(
-        `https://schoolreadingclubs.vercel.app/api/StudentSelfAssessment/student/${studentId}/book/${bookId}`
+        `https://schoolreadingclubs.vercel.app/api/StudentSelfAssessment/student/${studentId}/book/${bookId}`,
       );
       return {
         success: response.data.success,
         message: response.data.message,
-        data: response.data.data
+        data: response.data.data,
       };
     } catch (error) {
       return {
         success: false,
-        message: error.response?.data?.message || "حدث خطأ أثناء جلب التقييم الذاتي",
-        data: []
+        message:
+          error.response?.data?.message || "حدث خطأ أثناء جلب التقييم الذاتي",
+        data: [],
       };
     }
   };
@@ -290,36 +313,39 @@ export default function DataContextFunction({ children }) {
   const submitParentAssessment = async (assessmentData) => {
     try {
       // Get token from localStorage
-      const token = localStorage.getItem('token');
-      
+      const token = localStorage.getItem("token");
+
       // Ensure token exists
       if (!token) {
-        throw new Error('No authentication token found');
+        throw new Error("No authentication token found");
       }
 
       // Decode token to get parentId
       const decodedToken = jwtDecode(token);
-      
+
       // Prepare full assessment data with parentId
       const schoolCode = decodedToken.schoolCode;
       const fullAssessmentData = {
         ...assessmentData,
         parentId: decodedToken._id,
-        schoolCode
+        schoolCode,
       };
 
       const response = await axios.post(
-        'https://schoolreadingclubs.vercel.app/api/ParentAssessment/create', 
+        "https://schoolreadingclubs.vercel.app/api/ParentAssessment/create",
         fullAssessmentData,
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
-        }
+            "Content-Type": "application/json",
+          },
+        },
       );
       return response.data;
     } catch (error) {
-      console.error('Error submitting parent assessment:', error.response ? error.response.data : error.message);
+      console.error(
+        "Error submitting parent assessment:",
+        error.response ? error.response.data : error.message,
+      );
       throw error;
     }
   };
@@ -328,15 +354,16 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const schoolCode = decoded?.schoolCode;
-      if (!schoolCode) throw new Error('School code not found in token');
+      if (!schoolCode) throw new Error("School code not found in token");
 
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/RateTeacher/oneschool/${schoolCode}/Teachersratings`, {
-       
-      });
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/RateTeacher/oneschool/${schoolCode}/Teachersratings`,
+        {},
+      );
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching teacher ratings:', error);
+      console.error("Error fetching teacher ratings:", error);
       return null;
     }
   };
@@ -345,13 +372,18 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const teacherId = decoded?.id;
-      if (!teacherId) throw new Error('id of teacher not found in token');
-      console.log("teacherId in getTeacherRatingsforStudentsByteacherId:", teacherId);
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/RateTeacher/teacherrates/${teacherId}`);
-        
+      if (!teacherId) throw new Error("id of teacher not found in token");
+      console.log(
+        "teacherId in getTeacherRatingsforStudentsByteacherId:",
+        teacherId,
+      );
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/RateTeacher/teacherrates/${teacherId}`,
+      );
+
       return response.data;
     } catch (error) {
-      console.error('Error fetching teacher ratings:', error);
+      console.error("Error fetching teacher ratings:", error);
       return null;
     }
   };
@@ -359,17 +391,20 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const schoolCode = decoded?.schoolCode;
-      if (!schoolCode) throw new Error('School code not found in token');
+      if (!schoolCode) throw new Error("School code not found in token");
 
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/RateingStudentBook/RateingStudentBookbyschoolcode/${schoolCode}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/RateingStudentBookbyschoolcode/${schoolCode}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       return response.data;
     } catch (error) {
-      console.error('Error fetching student book ratings:', error);
+      console.error("Error fetching student book ratings:", error);
       return null;
     }
   };
@@ -378,13 +413,15 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const schoolCode = decoded?.schoolCode;
-      if (!schoolCode) throw new Error('School code not found in token');
+      if (!schoolCode) throw new Error("School code not found in token");
 
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/StudentSelfAssessment/oneschool/${schoolCode}/StudentsSelfAssessments`);
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/StudentSelfAssessment/oneschool/${schoolCode}/StudentsSelfAssessments`,
+      );
 
       return response.data;
     } catch (error) {
-      console.error('Error fetching student self assessments:', error);
+      console.error("Error fetching student self assessments:", error);
       return null;
     }
   };
@@ -393,17 +430,20 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const schoolCode = decoded?.schoolCode;
-      if (!schoolCode) throw new Error('School code not found in token');
+      if (!schoolCode) throw new Error("School code not found in token");
 
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/ReadingClubEvaluation/oneschool/${schoolCode}/ReadingClubEvaluations`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/ReadingClubEvaluation/oneschool/${schoolCode}/ReadingClubEvaluations`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       return response.data;
     } catch (error) {
-      console.error('Error fetching reading club evaluations:', error);
+      console.error("Error fetching reading club evaluations:", error);
       return null;
     }
   };
@@ -412,17 +452,20 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const schoolCode = decoded?.schoolCode;
-      if (!schoolCode) throw new Error('School code not found in token');
+      if (!schoolCode) throw new Error("School code not found in token");
 
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/ParentAssessment/parentAssessmentsByschoolCode/${schoolCode}/parentAssessments`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/ParentAssessment/parentAssessmentsByschoolCode/${schoolCode}/parentAssessments`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       return response.data;
     } catch (error) {
-      console.error('Error fetching parent assessments:', error);
+      console.error("Error fetching parent assessments:", error);
       return null;
     }
   };
@@ -431,17 +474,20 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const schoolCode = decoded?.schoolCode;
-      if (!schoolCode) throw new Error('School code not found in token');
+      if (!schoolCode) throw new Error("School code not found in token");
 
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/RateTeacher/attendance/oneschool/${schoolCode}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/RateTeacher/attendance/oneschool/${schoolCode}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.error('Error fetching school attendance:', error);
+      console.error("Error fetching school attendance:", error);
       return null;
     }
   };
@@ -450,17 +496,20 @@ export default function DataContextFunction({ children }) {
     try {
       const decoded = decodeToken(token);
       const schoolCode = decoded?.schoolCode;
-      if (!schoolCode) throw new Error('School code not found in token');
+      if (!schoolCode) throw new Error("School code not found in token");
 
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/RateingStudentBook/uniquebooksoneschool/${schoolCode}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/uniquebooksoneschool/${schoolCode}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       return response.data;
     } catch (error) {
-      console.error('Error fetching unique books:', error);
+      console.error("Error fetching unique books:", error);
       return null;
     }
   };
@@ -470,30 +519,33 @@ export default function DataContextFunction({ children }) {
       const studentId = decodedToken?.id;
 
       const response = await axios.get(
-        `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/student/${studentId}/book/${bookId}`
+        `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/student/${studentId}/book/${bookId}`,
       );
-      
+
       return {
         success: true,
         message: response.data.message,
-        data: response.data.data
+        data: response.data.data,
       };
     } catch (error) {
-      console.error('Error getting book rating:', error);
+      console.error("Error getting book rating:", error);
       throw {
         success: false,
-        message: error.response?.data?.message || 'حدث خطأ أثناء جلب تقييم الكتاب',
-        error: error.response?.data?.error
+        message:
+          error.response?.data?.message || "حدث خطأ أثناء جلب تقييم الكتاب",
+        error: error.response?.data?.error,
       };
     }
   };
 
   const getTeacherRatingsforstudent = async (bookId) => {
     try {
-      const response = await axios.get(`https://schoolreadingclubs.vercel.app/api/RateTeacher/book/${bookId}`);
+      const response = await axios.get(
+        `https://schoolreadingclubs.vercel.app/api/RateTeacher/book/${bookId}`,
+      );
       return response.data;
     } catch (error) {
-      console.error('Error fetching teacher ratings:', error);
+      console.error("Error fetching teacher ratings:", error);
       return null;
     }
   };
@@ -504,12 +556,12 @@ export default function DataContextFunction({ children }) {
       const { data } = await axios.get(
         `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/getStudentRatingsBooksWithDetails/${studentId}`,
         {
-          headers: { Authorization: `Bearer ${token}` }
-        }
+          headers: { Authorization: `Bearer ${token}` },
+        },
       );
       return data;
     } catch (error) {
-      console.error('Error fetching student ratings:', error);
+      console.error("Error fetching student ratings:", error);
       return { success: false, data: [] };
     }
   }
@@ -520,12 +572,12 @@ export default function DataContextFunction({ children }) {
       const { data } = await axios.get(
         `https://schoolreadingclubs.vercel.app/api/StudentSelfAssessment/getStudentSelfAssessmentsWithDetails/${studentId}`,
         {
-          headers: { Authorization: `Bearer ${token}` }
-        }
+          headers: { Authorization: `Bearer ${token}` },
+        },
       );
       return data;
     } catch (error) {
-      console.error('Error fetching student self assessments:', error);
+      console.error("Error fetching student self assessments:", error);
       return { success: false, data: [] };
     }
   }
@@ -536,12 +588,12 @@ export default function DataContextFunction({ children }) {
       const { data } = await axios.get(
         `https://schoolreadingclubs.vercel.app/api/ReadingClubEvaluation/getStudentEvaluationsWithDetails/${studentId}`,
         {
-          headers: { Authorization: `Bearer ${token}` }
-        }
+          headers: { Authorization: `Bearer ${token}` },
+        },
       );
       return data;
     } catch (error) {
-      console.error('Error fetching student reading club evaluations:', error);
+      console.error("Error fetching student reading club evaluations:", error);
       return { success: false, data: [] };
     }
   }
@@ -551,11 +603,10 @@ export default function DataContextFunction({ children }) {
     try {
       const { data } = await axios.get(
         `https://schoolreadingclubs.vercel.app/api/ParentAssessment/getParentAssessmentsWithDetails/${parentId}`,
-        
       );
       return data;
     } catch (error) {
-      console.error('Error fetching parent assessments:', error);
+      console.error("Error fetching parent assessments:", error);
       return { success: false, data: [] };
     }
   }
@@ -564,11 +615,11 @@ export default function DataContextFunction({ children }) {
   async function getTeacherBooks(teacherId) {
     try {
       const { data } = await axios.get(
-        `https://schoolreadingclubs.vercel.app/api/Book/teacher/${teacherId}/books`
+        `https://schoolreadingclubs.vercel.app/api/Book/teacher/${teacherId}/books`,
       );
       return data;
     } catch (error) {
-      console.error('Error fetching teacher books:', error);
+      console.error("Error fetching teacher books:", error);
       return { success: false, data: [] };
     }
   }
@@ -577,29 +628,29 @@ export default function DataContextFunction({ children }) {
   async function getBookStudentRatingsWithDetails(bookId) {
     try {
       const { data } = await axios.get(
-        `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/getBookStudentRatingsWithDetails/${bookId}`
+        `https://schoolreadingclubs.vercel.app/api/RateingStudentBook/getBookStudentRatingsWithDetails/${bookId}`,
       );
       return data;
     } catch (error) {
-      console.error('Error fetching book student ratings:', error);
+      console.error("Error fetching book student ratings:", error);
       return { success: false, data: [] };
     }
   }
 
   const getBookStudentSelfAssessmentsWithDetails = async (bookId) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await axios.get(
         `https://schoolreadingclubs.vercel.app/api/StudentSelfAssessment/getBookStudentSelfAssessmentsWithDetails/${bookId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       return response.data;
     } catch (error) {
-      console.error('Error fetching student self assessments:', error);
+      console.error("Error fetching student self assessments:", error);
       return { success: false, data: [] };
     }
   };

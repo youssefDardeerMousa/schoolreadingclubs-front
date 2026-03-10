@@ -22,7 +22,7 @@ export default function ChangeParentPassword() {
             setIsSuccess(true);
             setShowModal(true);
             setTimeout(() => {
-                navigate("/SchoolsBookClubs/ForgetPasswordParent");
+                navigate("/ForgetPasswordParent");
             }, 2000);
         } catch (error) {
             setModalMessage(
@@ -38,7 +38,7 @@ export default function ChangeParentPassword() {
     const handleCloseModal = () => {
         setShowModal(false);
         if (isSuccess) {
-            navigate("/SchoolsBookClubs/ForgetPasswordParent");
+            navigate("/ForgetPasswordParent");
         }
     };
 

@@ -14,7 +14,7 @@ export default function Dashboard() {
   // Redirect if not a teacher, student, parent or admin
   useEffect(() => {
     if (userRole !== 'معلم' && userRole !== 'طالب' && userRole !== 'ولي أمر' && userRole !== 'مشرف') {
-      navigate('/SchoolsBookClubs'); // Redirect to home or login page
+      navigate('/'); // Redirect to home or login page
     }
   }, [userRole, navigate]);
 
@@ -32,21 +32,21 @@ export default function Dashboard() {
       icon: 'fa-book',
       title: 'إضافة كتاب جديد',
       description: 'قم بإضافة كتب جديدة إلى مكتبة النادي',
-      link: '/SchoolsBookClubs/books',
+      link: '/books',
       buttonText: 'أضف كتاب'
     },
     {
       icon: 'fa-book-open',
       title: 'الكتب والتقييم',
       description: 'استعراض وإدارة الكتب الخاصة بك',
-      link: '/SchoolsBookClubs/Teacherbooks',
+      link: '/Teacherbooks',
       buttonText: 'عرض الكتب'
     },
     {
       icon: 'fa-paper-plane',
       title: 'دليل المعلم',
       description: 'اقرأ دليل المعلم وتتبع التعليمات والارشادات',
-      link: '/SchoolsBookClubs/TeacherGuide',
+      link: '/TeacherGuide',
       buttonText: 'عرض دليل المعلم'
     }
   ];
@@ -57,21 +57,21 @@ export default function Dashboard() {
       icon: 'fa-book-reader',
       title: 'الكتب والتقييم',
       description: 'استعراض وتقييم الكتب الخاصة بك',
-      link: '/SchoolsBookClubs/LibraryStudent',
+      link: '/LibraryStudent',
       buttonText: 'عرض الكتب وتقييمها'
     },
     {
       icon: 'fa-book-open',
       title: 'دليل الطالب',
       description: 'تتبع التعليمات والارشادات في الدليل الخاص بك',
-      link: '/SchoolsBookClubs/StudentGuide',
+      link: '/StudentGuide',
       buttonText: 'افتح دليل الطالب'
     },
     {
       icon: 'fa-trophy',
       title: 'الملف الشخصي',
       description: 'عرض الملف الشخصي بالبيانات الشخصية',
-      link: '/SchoolsBookClubs/ProfileStudent',
+      link: '/ProfileStudent',
       buttonText: 'عرض الملف الشخصي'
     }
   ];
@@ -82,21 +82,21 @@ export default function Dashboard() {
       icon: 'fa-book-reader',
       title: 'دليل ولي الامر',
       description: 'اقراء دليل ولي الامر وتتبع التعليمات والارشادات',
-      link: '/SchoolsBookClubs/ParentGuide',
+      link: '/ParentGuide',
       buttonText: 'دليل ولي الامر'
     },
     {
       icon: 'fa-user',
       title: 'الملف الشخصي',
       description: 'عرض معلومات المستخدم',
-      link: '/SchoolsBookClubs/Parentprofile',
+      link: '/Parentprofile',
       buttonText: 'عرض الملف'
     },
     {
       icon: 'fa-chart-line',
       title: 'تقييم الأداء',
       description: 'أدخل تقييمك بناء علي تغير سلوك ابنك اثناء رحلته مع برنامج أندية القراءة المدرسية',
-      link: '/SchoolsBookClubs/Parentassessment',
+      link: '/Parentassessment',
       buttonText: 'تقييم الأداء'
     }
   ];
@@ -107,7 +107,7 @@ export default function Dashboard() {
       icon: 'fa-chalkboard-teacher',
       title: 'تقييمات المعلمين',
       description: 'تحليل تقييم المعلمين للطالب',
-      link: '/SchoolsBookClubs/admin/OneSchoolTeacherEvaluations',
+      link: '/admin/OneSchoolTeacherEvaluations',
       color: 'linear-gradient(135deg, #ff6b6b 0%, #ff9a9a 100%)',
       details: [
         { label: 'عرض المعلمين', value: '', icon: 'fa-user-tie' },
@@ -119,7 +119,7 @@ export default function Dashboard() {
       icon: 'fa-graduation-cap',
       title: 'تقييمات الطلاب',
       description: 'متابعة أداء الطالب في النادي',
-      link: '/SchoolsBookClubs/admin/OneSchoolStusentEvaluations',
+      link: '/admin/OneSchoolStusentEvaluations',
       color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
       details: [
         { label: 'عرض الطلاب', value: '', icon: 'fa-users' },
@@ -131,7 +131,7 @@ export default function Dashboard() {
       icon: 'fa-user-friends',
       title: 'تقييمات أولياء الأمور',
       description: 'مراجعة تقييمات أولياء الأمور',
-      link: '/SchoolsBookClubs/admin/OneSchoolParentEvaluations',
+      link: '/admin/OneSchoolParentEvaluations',
       color: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
       details: [
         { label: 'عرض أولياء الأمور', value: '', icon: 'fa-user-shield' },

@@ -23,7 +23,7 @@ export default function ChangeTeacherPassword() {
             setIsSuccess(true);
             setShowModal(true);
             setTimeout(() => {
-                navigate("/SchoolsBookClubs/ForgetPasswordteacher");
+                navigate("/ForgetPasswordteacher");
             }, 2000);
         } catch (error) {
             setModalMessage(
@@ -39,7 +39,7 @@ export default function ChangeTeacherPassword() {
     const handleCloseModal = () => {
         setShowModal(false);
         if (isSuccess) {
-            navigate("/SchoolsBookClubs/ForgetPasswordteacher");
+            navigate("/ForgetPasswordteacher");
         }
     };
 

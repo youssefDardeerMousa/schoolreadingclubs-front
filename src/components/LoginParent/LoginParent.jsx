@@ -1,43 +1,47 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './LoginParent.css';
-import { DataContext } from '../../context/context.js';
-import { useContext } from 'react';
+import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./LoginParent.css";
+import { DataContext } from "../../context/context.js";
+import { useContext } from "react";
 
 const LoginParent = () => {
   const navigate = useNavigate();
   const { setTokenAndUpdateRole } = useContext(DataContext);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertVariant, setAlertVariant] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertVariant, setAlertVariant] = useState("");
 
   const validationSchema = Yup.object({
     email: Yup.string()
-      .email('البريد الإلكتروني غير صالح')
-      .required('البريد الإلكتروني مطلوب'),
-    password: Yup.string()
-      .required('كلمة المرور مطلوبة')
+      .email("البريد الإلكتروني غير صالح")
+      .required("البريد الإلكتروني مطلوب"),
+    password: Yup.string().required("كلمة المرور مطلوبة"),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const { data } = await axios.post('https://schoolreadingclubs.vercel.app/api/parent/login', values);
-      
-      if (data.message === 'تم تسجيل الدخول بنجاح') {
+      const { data } = await axios.post(
+        "https://schoolreadingclubs.vercel.app/api/parent/login",
+        values,
+      );
+
+      if (data.message === "تم تسجيل الدخول بنجاح") {
         setTokenAndUpdateRole(data.token);
-        setAlertVariant('success');
-        setAlertMessage('تم تسجيل الدخول بنجاح');
+        setAlertVariant("success");
+        setAlertMessage("تم تسجيل الدخول بنجاح");
         setShowAlert(true);
         setTimeout(() => {
-          navigate('/SchoolsBookClubs/dashboard');
+          navigate("/dashboard");
         }, 2000);
       }
     } catch (error) {
-      setAlertVariant('danger');
-      setAlertMessage(error.response?.data?.message || 'حدث خطأ أثناء تسجيل الدخول');
+      setAlertVariant("danger");
+      setAlertMessage(
+        error.response?.data?.message || "حدث خطأ أثناء تسجيل الدخول",
+      );
       setShowAlert(true);
     }
     setSubmitting(false);
@@ -47,22 +51,18 @@ const LoginParent = () => {
     <div className="login-parent-container">
       <div className="login-parent-card">
         <h2 className="login-parent-title">
-          
           تسجيل دخول ولي الأمر
           <i className="fas fa-user-plus"></i>
         </h2>
-        
 
         {showAlert && (
-          <div className={`alert ${alertVariant}`}>
-            {alertMessage}
-          </div>
+          <div className={`alert ${alertVariant}`}>{alertMessage}</div>
         )}
 
         <Formik
           initialValues={{
-            email: '',
-            password: ''
+            email: "",
+            password: "",
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -77,7 +77,7 @@ const LoginParent = () => {
                 <Field
                   type="email"
                   name="email"
-                  className={`form-control ${errors.email && touched.email ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.email && touched.email ? "is-invalid" : ""}`}
                   placeholder="ادخل البريد الإلكتروني"
                 />
                 {errors.email && touched.email && (
@@ -93,7 +93,7 @@ const LoginParent = () => {
                 <Field
                   type="password"
                   name="password"
-                  className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
+                  className={`form-control ${errors.password && touched.password ? "is-invalid" : ""}`}
                   placeholder="ادخل كلمة المرور"
                 />
                 {errors.password && touched.password && (
@@ -122,13 +122,13 @@ const LoginParent = () => {
               <div className="links-container">
                 <span
                   className="link"
-                  onClick={() => navigate('/SchoolsBookClubs/SignupParent')}
+                  onClick={() => navigate("/SignupParent")}
                 >
                   إنشاء حساب جديد
                 </span>
                 <span
                   className="link"
-                  onClick={() => navigate('/SchoolsBookClubs/ChangeParentPassword')}
+                  onClick={() => navigate("/ChangeParentPassword")}
                 >
                   نسيت كلمة المرور؟
                 </span>

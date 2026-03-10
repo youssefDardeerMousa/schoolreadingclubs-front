@@ -1,69 +1,77 @@
-import React from 'react';
-import { Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import './WelcomePage.css';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import "./WelcomePage.css";
+import { Helmet } from "react-helmet";
 
 export default function WelcomePage() {
   const userTypes = [
     {
-      title: 'الطلاب',
-      description: 'منصة تفاعلية للطلاب من مختلف المراحل العمرية للمشاركة في نادي الكتاب',
-      icon: '📚',
-      path: '/SchoolsBookClubs/LoginStudent'
+      title: "الطلاب",
+      description:
+        "منصة تفاعلية للطلاب من مختلف المراحل العمرية للمشاركة في نادي الكتاب",
+      icon: "📚",
+      path: "/LoginStudent",
     },
     {
-      title: 'أولياء الأمور',
-      description: 'تقييم أبنائكم وأثر مشاركتهم في البرنامج على تطور مهاراتهم',
-      icon: '👨‍👩‍👧‍👦',
-      path: '/SchoolsBookClubs/LoginParent'
+      title: "أولياء الأمور",
+      description: "تقييم أبنائكم وأثر مشاركتهم في البرنامج على تطور مهاراتهم",
+      icon: "👨‍👩‍👧‍👦",
+      path: "/LoginParent",
     },
     {
-      title: 'المعلمون',
-      description: 'متابعة مشاركة الطالب في البرنامج وتقييم مهاراتهم',
-      icon: '👨‍🏫',
-      path: '/SchoolsBookClubs/LoginTeacher'
+      title: "المعلمون",
+      description: "متابعة مشاركة الطالب في البرنامج وتقييم مهاراتهم",
+      icon: "👨‍🏫",
+      path: "/LoginTeacher",
     },
     {
-      title: 'المشرفون',
-      description: 'إدارة البرنامج ومتابعة أداء الطلاب والمعلميين في تطوير مهارات القراءة',
-      icon: '👨‍💼',
-      path: '/SchoolsBookClubs/LoginSupervisor'
-    }
-   
+      title: "المشرفون",
+      description:
+        "إدارة البرنامج ومتابعة أداء الطلاب والمعلميين في تطوير مهارات القراءة",
+      icon: "👨‍💼",
+      path: "/LoginSupervisor",
+    },
   ];
 
   const evaluationTypes = [
     {
-      title: 'تقييم الكتب',
-      description: 'تقييم الطلاب للكتب التي قرؤوها'
+      title: "تقييم الكتب",
+      description: "تقييم الطلاب للكتب التي قرؤوها",
     },
     {
-      title: 'تقييم البرنامج',
-      description: 'تقييم مدى استفادة الطلاب من البرنامج'
+      title: "تقييم البرنامج",
+      description: "تقييم مدى استفادة الطلاب من البرنامج",
     },
     {
-      title: 'تقييم المعلمين',
-      description: 'تقييم أداء وتقدم الطلاب من قبل المعلمين'
+      title: "تقييم المعلمين",
+      description: "تقييم أداء وتقدم الطلاب من قبل المعلمين",
     },
     {
-      title: 'تقييم أولياء الأمور',
-      description: 'تقييم تقدم الطلاب من قبل أولياء أمورهم'
-    }
+      title: "تقييم أولياء الأمور",
+      description: "تقييم تقدم الطلاب من قبل أولياء أمورهم",
+    },
   ];
 
   return (
     <div className="welcome-page">
       <Helmet>
         <title>برنامج اندية القراءة المدرسية</title>
-        <meta name="description" content="برنامج نادي الكتاب المدرسي - تعزيز القراءة والتعلم" />
+        <meta
+          name="description"
+          content="برنامج نادي الكتاب المدرسي - تعزيز القراءة والتعلم"
+        />
       </Helmet>
 
       <section className="hero-section">
         <Container>
           <div className="hero-content text-center">
-            <h1 className="main-title">مرحباً بكم في برنامج اندية القراءة المدرسية</h1>
-            <p className="lead text-light">منصة تعليمية متكاملة لتعزيز القراءة والتعلم</p>
+            <h1 className="main-title">
+              مرحباً بكم في برنامج اندية القراءة المدرسية
+            </h1>
+            <p className="lead text-light">
+              منصة تعليمية متكاملة لتعزيز القراءة والتعلم
+            </p>
           </div>
         </Container>
       </section>
@@ -73,8 +81,9 @@ export default function WelcomePage() {
           <div className="section-content">
             <h2 className="section-title">عن البرنامج</h2>
             <p className="about-text">
-              يهدف برنامج اندية القراءة المدرسية إلى تعزيز حب القراءة وتطوير المهارات اللغوية والفكرية
-              لدى الطلاب من خلال برنامج متكامل يشمل القراءة والمناقشة والتقييم.
+              يهدف برنامج اندية القراءة المدرسية إلى تعزيز حب القراءة وتطوير
+              المهارات اللغوية والفكرية لدى الطلاب من خلال برنامج متكامل يشمل
+              القراءة والمناقشة والتقييم.
             </p>
           </div>
         </Container>
@@ -131,7 +140,6 @@ export default function WelcomePage() {
           </div>
         </Container>
       </section>
-      
     </div>
   );
 }
