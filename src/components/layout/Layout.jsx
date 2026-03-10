@@ -19,10 +19,8 @@ const Layout = () => {
       {token && role && <MainNavbar />}
       <main className="main-content">
         <Outlet />
-     
       </main>
     </div>
   );
 };
-
 export default Layout;
