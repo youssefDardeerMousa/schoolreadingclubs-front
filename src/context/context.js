@@ -119,7 +119,7 @@ export default function DataContextFunction({ children }) {
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);
-    window.location.href = "";
+    window.location.href = "/";
   };
 
   // Add a method to manually set token and trigger role update
